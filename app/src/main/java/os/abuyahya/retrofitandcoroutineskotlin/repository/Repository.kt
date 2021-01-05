@@ -25,4 +25,8 @@ class Repository {
     suspend fun getPostUserIdAndSortUsingMap(userId: Int, options: Map<String, String>): Response<List<Post>>{
         return RetrofitInstance.api.getPostUserIdAndSortUsingMap(userId, options)
     }
+
+    suspend fun pushPost(post: Post): Response<Post>{
+        return RetrofitInstance.api.pushPost(post)
+    }
 }

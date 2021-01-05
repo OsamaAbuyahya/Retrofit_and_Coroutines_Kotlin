@@ -2,6 +2,7 @@ package os.abuyahya.retrofitandcoroutineskotlin
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import os.abuyahya.retrofitandcoroutineskotlin.adapter.MyAdapter
 import os.abuyahya.retrofitandcoroutineskotlin.databinding.ActivityMainBinding
+import os.abuyahya.retrofitandcoroutineskotlin.model.Post
 import os.abuyahya.retrofitandcoroutineskotlin.repository.Repository
 import os.abuyahya.retrofitandcoroutineskotlin.viewmodel.MainViewModel
 import os.abuyahya.retrofitandcoroutineskotlin.viewmodel.MainViewModelFactory
@@ -37,7 +39,19 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, response.code(), Toast.LENGTH_SHORT).show()
         })
 
-
+        // Send Data To Server
+        binding.button.setOnClickListener {
+            val post = Post(1, 1, "Osama Abu Yahya", "Hiii")
+            viewModel.pushPost(post)
+            viewModel.mResponse.observe(this, { response ->
+                if (response.isSuccessful){
+                    Log.d("Main", response.body().toString())
+                    Log.d("Main", response.body()!!.title)
+                    Log.d("Main", response.code().toString())
+                    Log.d("Main", response.message())
+                }
+            })
+        }
     }
 
     private fun setupRecyclerView(){

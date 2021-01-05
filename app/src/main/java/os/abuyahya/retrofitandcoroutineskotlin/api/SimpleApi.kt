@@ -2,10 +2,7 @@ package os.abuyahya.retrofitandcoroutineskotlin.api
 
 import os.abuyahya.retrofitandcoroutineskotlin.model.Post
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 
 interface SimpleApi {
 
@@ -34,4 +31,23 @@ interface SimpleApi {
         @Query("userId") userId: Int,
         @QueryMap options: Map<String,String>
     ):Response<List<Post>>
+
+
+    // Json Format
+    @POST("posts")
+    suspend fun pushPost(
+        @Body post: Post
+    ): Response<Post>
+
+    // Key and Value Format
+    @FormUrlEncoded
+    @POST("posts")
+    suspend fun pushPost2(
+        @Field("userId") userId: Int,
+        @Field("id") id: Int,
+        @Field("title") title: Int,
+        @Field("body") body: Int,
+    ): Response<Post>
+
+
 }
